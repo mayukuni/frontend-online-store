@@ -4,6 +4,7 @@ import Card from '../Components/Card';
 import Categories from '../Components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 // import { getCategories } from '../services/api';
+// teste
 
 class Home extends Component {
   constructor(props) {
