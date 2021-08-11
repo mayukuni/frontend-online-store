@@ -8,11 +8,7 @@ import { getProductsFromCategoryAndQuery } from '../services/api';
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.renderProductCards = this.renderProductCards.bind(this);
-    this.cartHandleCounter = this.cartHandleCounter.bind(this);
-    this.addToCart = this.addToCart.bind(this);
-    this.saveCart = this.saveCart.bind(this);
-    this.loadCart = this.loadCart.bind(this);
+
     this.state = {
       // categories: [],
       products: [],
@@ -85,7 +81,6 @@ class Home extends Component {
               title={ product.title }
               image={ product.thumbnail }
               price={ product.price }
-              id={ product.id }
             />
           ))}
         </div>
