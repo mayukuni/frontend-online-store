@@ -34,7 +34,6 @@ class Cart extends Component {
 
   render() {
     const { hasItems } = this.state;
-    console.log(hasItems);
     return (
       <div className="cart-container">
         <nav className="cart-nav">
