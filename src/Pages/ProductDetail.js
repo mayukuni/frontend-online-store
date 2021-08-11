@@ -18,7 +18,7 @@ class ProductDetail extends Component {
 
   handleChangeRating = (event) => {
     this.setState({
-      rating: event.target.rating,
+      rating: event.target.value,
     });
   }
 

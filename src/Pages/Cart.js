@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadCartFromLocalStorage } from '../services/cartLocalStorage';
 
-
 export default class Cart extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +25,7 @@ export default class Cart extends Component {
   renderCartDetail = () => (
     <h3>{this.state.cartItems[0].title}</h3>
   )
-
+  
   render() {
     const { cartItems } = this.state;
     console.log(cartItems);
