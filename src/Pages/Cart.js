@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { loadCartFromLocalStorage } from '../services/cartLocalStorage';
 
 export default class Cart extends Component {
   constructor(props) {
     super(props);
-    this.addToCart = this.addToCart.bind(this);
+
     this.state = {
       cartItems: [],
-      hasItems: false,
     };
   }
 
@@ -15,26 +15,19 @@ export default class Cart extends Component {
     this.loadCart();
   }
 
-  addToCart(product) {
-    const { cartItems } = this.state;
-    if (cartItems.some((item) => item.id === product.id)) {
-      cartItems.find((item) => item.id === product.id).quantity += 1;
-      this.setState({ cartItems });
-    } else {
-      this.setState((prevState) => ({
-        cartItems: [...prevState.cartItems, {
-          quantity: 1,
-          id: product.id,
-          product: [product],
-        }],
-      }));
-    }
-    this.cartHandleCounter();
+  loadCart = async () => {
+    const itens = await loadCartFromLocalStorage();
+    console.log(itens);
+    this.setState({ cartItems: itens });
   }
 
+  renderCartDetail = () => (
+    <h3>{this.state.cartItems[0].title}</h3>
+  )
+
   render() {
-    const { hasItems } = this.state;
-    console.log(hasItems);
+    const { cartItems } = this.state;
+    console.log(cartItems);
     return (
       <div className="cart-container">
         <nav className="cart-nav">
@@ -45,7 +38,7 @@ export default class Cart extends Component {
           </div>
         </nav>
         <div className="cart-main">
-          {((totalCartItems > 0) ? (
+          {((cartItems.length > 0) ? (
             this.renderCartDetail()
           ) : (
             <div className="cart-empty">

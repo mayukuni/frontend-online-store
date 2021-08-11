@@ -11,6 +11,7 @@ class Home extends Component {
 
     this.state = {
       // categories: [],
+      cartItems: [],
       products: [],
       categoryId: '',
       query: '',
@@ -35,6 +36,23 @@ class Home extends Component {
 
   handleInputChange = (event) => {
     this.setState({ query: event.target.value });
+  }
+
+  addToCart(product) {
+    const { cartItems } = this.state;
+    if (cartItems.some((item) => item.id === product.id)) {
+      cartItems.find((item) => item.id === product.id).quantity += 1;
+      this.setState({ cartItems });
+    } else {
+      this.setState((prevState) => ({
+        cartItems: [...prevState.cartItems, {
+          quantity: 1,
+          id: product.id,
+          product: [product],
+        }],
+      }));
+    }
+    // this.cartHandleCounter();
   }
 
   // componentDidMount() {
@@ -83,6 +101,7 @@ class Home extends Component {
               price={ product.price }
               id={ product.id }
               freeShipping={ product.shipping.free_shipping }
+              addToCart={ this.addToCart }
             />
           ))}
         </div>
