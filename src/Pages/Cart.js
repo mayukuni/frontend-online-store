@@ -33,7 +33,7 @@ export default class Cart extends Component {
   }
 
   render() {
-    const { hasItems } = this.state;
+    const { hasItems, cartItems } = this.state;
     console.log(hasItems);
     return (
       <div className="cart-container">
@@ -45,7 +45,7 @@ export default class Cart extends Component {
           </div>
         </nav>
         <div className="cart-main">
-          {((totalCartItems > 0) ? (
+          {((cartItems > 0) ? (
             this.renderCartDetail()
           ) : (
             <div className="cart-empty">
