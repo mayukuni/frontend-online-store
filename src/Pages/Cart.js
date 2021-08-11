@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { loadCartFromLocalStorage } from '../services/cartLocalStorage';
 
+
 export default class Cart extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ export default class Cart extends Component {
   componentDidMount() {
     this.loadCart();
   }
+
 
   loadCart = async () => {
     const itens = await loadCartFromLocalStorage();
@@ -39,6 +41,7 @@ export default class Cart extends Component {
         </nav>
         <div className="cart-main">
           {((cartItems.length > 0) ? (
+
             this.renderCartDetail()
           ) : (
             <div className="cart-empty">

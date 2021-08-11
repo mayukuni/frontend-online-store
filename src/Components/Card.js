@@ -19,6 +19,7 @@ class Card extends Component {
           <img src={ image } alt={ title } width="200" />
           <h3>{price}</h3>
           {freeShipping ? <h4 data-testid="free-shipping">Frete Grátis</h4> : ''}
+
           <button
             type="button"
             className="material-icons add-cart"
@@ -35,6 +36,7 @@ class Card extends Component {
 }
 
 Card.propTypes = {
+
   product: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
