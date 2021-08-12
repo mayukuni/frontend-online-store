@@ -10,7 +10,7 @@ export default class Cart extends Component {
       itens: [],
     };
   }
-
+// aa
   componentDidMount() {
     this.loadCart();
   }
