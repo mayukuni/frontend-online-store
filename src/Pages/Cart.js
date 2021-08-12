@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { cartItens } from '../services/cartItens';
 
 export default class Cart extends Component {
   constructor(props) {
     super(props);
-    this.addToCart = this.addToCart.bind(this);
+
     this.state = {
-      cartItems: [],
-      hasItems: false,
+      itens: [],
     };
   }
 
@@ -15,26 +15,22 @@ export default class Cart extends Component {
     this.loadCart();
   }
 
-  addToCart(product) {
-    const { cartItems } = this.state;
-    if (cartItems.some((item) => item.id === product.id)) {
-      cartItems.find((item) => item.id === product.id).quantity += 1;
-      this.setState({ cartItems });
-    } else {
-      this.setState((prevState) => ({
-        cartItems: [...prevState.cartItems, {
-          quantity: 1,
-          id: product.id,
-          product: [product],
-        }],
-      }));
-    }
-    this.cartHandleCounter();
+  loadCart = () => {
+    this.setState({ itens: cartItens });
+  }
+
+  renderCartDetail = () => {
+    const { itens } = this.state;
+    return (
+      <div>
+        <h3 data-testid="shopping-cart-product-name">{itens[0].product.title}</h3>
+        <h3 data-testid="shopping-cart-product-quantity">{itens[0].quantity}</h3>
+      </div>
+    );
   }
 
   render() {
-    const { hasItems, cartItems } = this.state;
-    console.log(hasItems);
+    const { itens } = this.state;
     return (
       <div className="cart-container">
         <nav className="cart-nav">
@@ -45,7 +41,8 @@ export default class Cart extends Component {
           </div>
         </nav>
         <div className="cart-main">
-          {((cartItems > 0) ? (
+          {((itens.length > 0) ? (
+
             this.renderCartDetail()
           ) : (
             <div className="cart-empty">
