@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { loadCartFromLocalStorage } from '../services/cartLocalStorage';
+import { cartItens } from '../services/cartItens';
 
 export default class Cart extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cartItems: [],
+      itens: [],
     };
   }
 
@@ -15,20 +15,22 @@ export default class Cart extends Component {
     this.loadCart();
   }
 
-
-  loadCart = async () => {
-    const itens = await loadCartFromLocalStorage();
-    console.log(itens);
-    this.setState({ cartItems: itens });
+  loadCart = () => {
+    this.setState({ itens: cartItens });
   }
 
-  renderCartDetail = () => (
-    <h3>{this.state.cartItems[0].title}</h3>
-  )
-  
+  renderCartDetail = () => {
+    const { itens } = this.state;
+    return (
+      <div>
+        <h3 data-testid="shopping-cart-product-name">{itens[0].product.title}</h3>
+        <h3 data-testid="shopping-cart-product-quantity">{itens[0].quantity}</h3>
+      </div>
+    );
+  }
+
   render() {
-    const { cartItems } = this.state;
-    console.log(cartItems);
+    const { itens } = this.state;
     return (
       <div className="cart-container">
         <nav className="cart-nav">
@@ -39,7 +41,7 @@ export default class Cart extends Component {
           </div>
         </nav>
         <div className="cart-main">
-          {((cartItems.length > 0) ? (
+          {((itens.length > 0) ? (
 
             this.renderCartDetail()
           ) : (

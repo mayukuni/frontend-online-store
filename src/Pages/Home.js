@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Card from '../Components/Card';
 import Categories from '../Components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
+import { addProductToCart } from '../services/cartItens';
 // import { getCategories } from '../services/api';
 
 class Home extends Component {
@@ -11,7 +12,6 @@ class Home extends Component {
 
     this.state = {
       // categories: [],
-      cartItems: [],
       products: [],
       categoryId: '',
       query: '',
@@ -37,32 +37,8 @@ class Home extends Component {
   }
 
   addToCart(product) {
-    const { cartItems } = this.state;
-    if (cartItems.some((item) => item.id === product.id)) {
-      cartItems.find((item) => item.id === product.id).quantity += 1;
-      this.setState({ cartItems });
-    } else {
-      this.setState((prevState) => ({
-        cartItems: [...prevState.cartItems, {
-          quantity: 1,
-          id: product.id,
-          product: [product],
-        }],
-      }));
-    }
-    // this.cartHandleCounter();
+    addProductToCart(product);
   }
-
-  // componentDidMount() {
-  //   this.fetchCategories();
-  // }
-
-  // fetchCategories = async () => {
-  //   const categories = await getCategories();
-  //   this.setState({
-  //     categories,
-  //   });
-  // }
 
   render() {
     const { query, products } = this.state;
@@ -91,21 +67,26 @@ class Home extends Component {
         <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
         <Categories onChange={ this.handleCategorieChange } />
         <div>
-          {products.map((product) => (
-            <Card
-              key={ product.id }
-              title={ product.title }
-              image={ product.thumbnail }
-              price={ product.price }
-              id={ product.id }
-              freeShipping={ product.shipping.free_shipping }
-              addToCart={ this.addToCart }
-            />
-          ))}
+          {products.map((product) => {
+            const item = {
+              title: product.title,
+              image: product.thumbnail,
+              price: product.price,
+              id: product.id,
+              freeShipping: product.shipping.free_shipping,
+            };
+            return (
+              <Card
+                key={ product.id }
+                product={ item }
+                addToCart={ this.addToCart }
+              />
+            );
+          })}
         </div>
       </div>
     );
   }
 }
-// aa
+
 export default Home;

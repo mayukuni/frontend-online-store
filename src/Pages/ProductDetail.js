@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { addProductToCart } from '../services/cartItens';
 
 class ProductDetail extends Component {
   constructor() {
@@ -31,17 +33,31 @@ class ProductDetail extends Component {
     });
   }
 
+  addToCart(product) {
+    addProductToCart(product);
+  }
+
   render() {
-    const { info: { history: { location: { state:
-      { returnTo: detalhes } } } } } = this.props;
+    const { info: { location: { state: { product } } } } = this.props;
     const { review, rating } = this.state;
     return (
       <div>
+        <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
+
         <div data-testid="product-detail-name">
-          <p>{detalhes.title}</p>
-          <p>{detalhes.image}</p>
-          <p>{detalhes.price}</p>
+          <p>{product.title}</p>
+          <p>{product.image}</p>
+          <p>{product.price}</p>
         </div>
+
+        <button
+          type="button"
+          className="material-icons add-cart"
+          data-testid="product-detail-add-to-cart"
+          onClick={ () => addProductToCart(product) }
+        >
+          Adicionar ao carrinho
+        </button>
 
         <form onSubmit={ this.handleSubmit }>
           <label htmlFor="text-input">
@@ -52,6 +68,7 @@ class ProductDetail extends Component {
               onChange={ this.handleChangeReview }
             />
           </label>
+
           <label htmlFor="rating">
             <input
               type="number"
@@ -62,6 +79,7 @@ class ProductDetail extends Component {
               onChange={ this.handleChangeRating }
             />
           </label>
+
           <button type="submit">Avaliar</button>
         </form>
       </div>
@@ -71,14 +89,12 @@ class ProductDetail extends Component {
 
 ProductDetail.propTypes = {
   info: PropTypes.shape({
-    history: PropTypes.shape({
-      location: PropTypes.shape({
-        state: PropTypes.shape({
-          returnTo: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            image: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-          }).isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        product: PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          image: PropTypes.string.isRequired,
+          price: PropTypes.number.isRequired,
         }).isRequired,
       }).isRequired,
     }).isRequired,
