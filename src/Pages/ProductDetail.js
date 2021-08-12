@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { addProductToCart } from '../services/cartItens';
 
 class ProductDetail extends Component {
@@ -32,16 +33,23 @@ class ProductDetail extends Component {
     });
   }
 
+  addToCart(product) {
+    addProductToCart(product);
+  }
+
   render() {
     const { info: { location: { state: { product } } } } = this.props;
     const { review, rating } = this.state;
     return (
       <div>
+        <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
+
         <div data-testid="product-detail-name">
           <p>{product.title}</p>
           <p>{product.image}</p>
           <p>{product.price}</p>
         </div>
+
         <button
           type="button"
           className="material-icons add-cart"
@@ -49,7 +57,6 @@ class ProductDetail extends Component {
           onClick={ () => addProductToCart(product) }
         >
           Adicionar ao carrinho
-
         </button>
 
         <form onSubmit={ this.handleSubmit }>
@@ -61,6 +68,7 @@ class ProductDetail extends Component {
               onChange={ this.handleChangeReview }
             />
           </label>
+
           <label htmlFor="rating">
             <input
               type="number"
@@ -71,6 +79,7 @@ class ProductDetail extends Component {
               onChange={ this.handleChangeRating }
             />
           </label>
+
           <button type="submit">Avaliar</button>
         </form>
       </div>

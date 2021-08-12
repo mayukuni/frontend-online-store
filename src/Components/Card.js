@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+// import { addProductToCart } from '../services/cartItens';
 
 class Card extends Component {
   render() {
@@ -22,6 +23,7 @@ class Card extends Component {
             {freeShipping ? <h4 data-testid="free-shipping">Frete Grátis</h4> : ''}
           </div>
         </Link>
+
         <button
           type="button"
           className="material-icons add-cart"
@@ -29,7 +31,6 @@ class Card extends Component {
           onClick={ () => addToCart(product) }
         >
           Adicionar ao carrinho
-
         </button>
       </div>
     );

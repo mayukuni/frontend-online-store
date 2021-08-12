@@ -14,4 +14,5 @@ export function addProductToCart(product) {
       product,
     });
   }
+  console.log('foi');
 }
