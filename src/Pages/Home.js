@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../Components/Card';
-import Categories from '../Components/Categories';
+// import Categories from '../Components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import { addProductToCart } from '../services/cartItens';
 // import { getCategories } from '../services/api';
@@ -65,7 +65,7 @@ class Home extends Component {
           categoria.
         </h1>
         <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
-        <Categories onChange={ this.handleCategorieChange } />
+        {/* <Categories onChange={ this.handleCategorieChange } /> */}
         <div>
           {products.map((product) => {
             const item = {
